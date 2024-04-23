@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!-- saved from url=(0119)file:///Users/wenjtop/Desktop/%E6%AF%95%E4%B8%9A/myGraduation/home/Quick%20%E2%80%93%20Website%20UI%20Kit%20(FREE).html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Quick – Website UI Kit (FREE)</title>
+    <!-- Preloader -->
+    <style>
+        @keyframes hidePreloader {
+            0% {
+                width: 100%;
+                height: 100%;
+            }
+
+            100% {
+                width: 0;
+                height: 0;
+            }
+        }
+
+        body>div.preloader {
+            position: fixed;
+            background: white;
+            width: 100%;
+            height: 100%;
+            z-index: 1071;
+            opacity: 0;
+            transition: opacity .5s ease;
+            overflow: hidden;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body:not(.loaded)>div.preloader {
+            opacity: 1;
+        }
+
+        body:not(.loaded) {
+            overflow: hidden;
+        }
+
+        body.loaded>div.preloader {
+            animation: hidePreloader .5s linear .5s forwards;
+        }
+    </style>
+    <script>
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                document.querySelector('body').classList.add('loaded');
+            }, 300);
+        });
+    </script>
+    <!-- Favicon -->
+
+    <link rel="stylesheet" href="./Quick – Website UI Kit (FREE)_files/quick-website.css" id="stylesheet">
+</head>
+
+<body class="loaded">
+    <section class="slice py-7">
+        <div class="container">
+            <div class="row row-grid align-items-center">
+                <div class="col-12 col-md-5 col-lg-6 order-md-2 text-center">
+                    <!-- Image -->
+                    <figure class="w-100">
+                        <img alt="Image placeholder" src="./Quick – Website UI Kit (FREE)_files/illustration-3.svg" class="img-fluid mw-md-120">
+                    </figure>
+                </div>
+                <div class="col-12 col-md-7 col-lg-6 order-md-1 pr-md-5">
+                    <!-- Heading -->
+                    <h1 class="display-4 text-center text-md-left mb-3">
+                        It's time to amplify your <strong class="text-primary">online business</strong>
+                    </h1>
+                    <!-- Text -->
+                    <p class="lead text-center text-md-left text-muted">
+                        Build a beautiful, modern website with flexible Bootstrap components built from scratch.
+                    </p>
+                    <!-- Buttons -->
+                    <div class="text-center text-md-left mt-5">
+                        <a href="https://webpixels.io/themes/quick-free-bootstrap-theme" class="btn btn-primary btn-icon" target="_blank">
+                            <span class="btn-inner--text">Get started</span>
+                            <span class="btn-inner--icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+                        </a>
+                        <a href="https://webpixels.io/illustrations" class="btn btn-neutral btn-icon d-none d-lg-inline-block" target="_blank">See Illustrations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="slice slice-lg pt-lg-6 pb-0 pb-lg-6 bg-section-secondary">
+        <div class="container">
+            <!-- Title -->
+            <!-- Section title -->
+            <div class="row mb-5 justify-content-center text-center">
+                <div class="col-lg-6">
+                    <span class="badge badge-soft-success badge-pill badge-lg">
+                        Get started
+                    </span>
+                    <h2 class=" mt-4">Carefuly crafted components ready to use in your project</h2>
+                    <div class="mt-2">
+                        <p class="lead lh-180">Use Atomic Design to build components, sections and, then, pages.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card -->
+            
+        </div>
+    </section>
+    <script>
+        feather.replace({
+            'width': '1em',
+            'height': '1em'
+        })
+    </script>
+
+
+</body>
+</html>

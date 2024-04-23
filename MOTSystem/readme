@@ -1,0 +1,10 @@
+conda activate torch
+cd MyWork/myGraduation/MOTSystem/
+python manage.py runsslserver
+
+python manage.py runserver
+1、登陆系统。
+2、检测视频，实时展示，保存每帧图片，
+3、人流量计数，分析结果。
+4、车辆计数，分析结果。
+

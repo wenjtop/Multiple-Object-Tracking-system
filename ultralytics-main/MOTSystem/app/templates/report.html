@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+
+{% block css %}
+.centent {
+    margin-top: 80px;
+}
+{% endblock %}
+
+{% block content %}
+    <div class="container centent">
+        <div style="margin-bottom: 10px">
+            <a class="btn btn-success" href="/data/addVideo/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                上传视频
+            </a>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                视频列表
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>轨迹ID</th>
+                    <th>目标1</th>
+                    <th>目标2</th>
+                    <th>目标3</th>
+                    <th>目标4</th>
+                    <th>目标5</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr style="text-align:center">
+                        <th>{{ forloop.counter }}</th>
+                        <td>{{ obj.trackID }}</td>
+                        {% if obj.obj5 != "" %}
+                            <td><img src="/media/{{ obj.obj5 }}" style="height: 80px;"></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if obj.obj4 != "" %}
+                            <td><img src="/media/{{ obj.obj4 }}" style="height: 80px;"></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if obj.obj3 != "" %}
+                            <td><img src="/media/{{ obj.obj3 }}" style="height: 80px;"></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if obj.obj2 != "" %}
+                            <td><img src="/media/{{ obj.obj2 }}" style="height: 80px;"></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if obj.obj1 != "" %}
+                            <td><img src="/media/{{ obj.obj1 }}" style="height: 80px;"></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <ul class="pagination">
+            {{ page_string }}
+        </ul>
+    </div>
+{% endblock %}

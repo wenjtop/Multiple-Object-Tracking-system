@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+
+    <style>
+        .account {
+            width: 400px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            box-shadow: 5px 5px 20px #aaa;
+
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+            padding: 20px 40px;
+        }
+        .account h2 {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .bg{
+             background-image: url("../static/img/bg.jpg");
+             background-attachment: fixed;
+             background-size: 100%;
+        }
+        .bgc{
+            background:linear-gradient(45deg, rgb(255, 255, 255), rgb(255, 255, 255)) fixed;
+        }
+        .switch span{
+            color:#ccc;
+            font-size:3.4rem;
+            cursor: pointer;
+        }
+        .switch span.active{
+	        color:rgb(181, 154, 254);
+        }
+        .trans{
+            position: relative;
+            width: 100%;
+            margin: 2rem 0;
+            transition: .6s;
+        }
+        .hidden{
+            margin: 0;
+            height: 0;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body class="bg">
+<div class="account bgc">
+    <h2>用户登录</h2>
+    <div class="switch">
+        <span id="login" class="active">登录</span><span>/</span><span id="signup">注册</span><span>/</span><span id=forget>忘记密码?</span>
+    </div>
+
+    <from id='form' action="">
+        <div id="userName" class="trans" placeholder="Email"><input type="text"></div>
+        <div id="userPassword" class="trans" placeholder="Uerename"><input type="text"></div>
+        <div id="userEmail" class="trans hidden" placeholder="Password"><input type="text"></div>
+        <div id="userQQ" class="trans hidden" placeholder="Repeat"><input type="text"></div>
+    </from>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="input1 userName form-group">
+            <label>用户名</label>
+            {{ form.username }}
+            <span style="color: red;">{{ form.username.errors.0 }}</span>
+        </div>
+        <div class="input1 userPassword form-group">
+            <label>密码</label>
+            {{ form.password }}
+            <span style="color: red;">{{ form.password.errors.0 }}</span>
+        </div>
+        <div id="email" class="input1 hidden userEmail form-group">
+            <label>邮箱</label>
+            {{ form.email }}
+            <span style="color: red;">{{ form.password.errors.0 }}</span>
+        </div>
+        <div class="input1 hidden userQQ form-group">
+            <label>QQ</label>
+            {{ form.qq }}
+        </div>
+        <div class="input1 userImgCode form-group">
+            <label for="id_code">图片验证码</label>
+            <div class="row">
+                <div class="col-xs-7">
+                    {{ form.code }}
+                    <span style="color: red;">{{ form.code.errors.0 }}</span>
+                </div>
+                <div class="col-xs-5">
+                    <img id="image_code" src="/image/code/" style="width: 125px;">
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="table_id" value="table2">
+        <input type="submit" value="登 录" class="btn btn-primary">
+    </form>
+</div>
+<script>
+    $('#login').click(function () {
+        $('.switch span').removeClass('active');
+        $(this).addClass('active');
+        $('#userName').removeClass('hidden');
+        $('#userPassword').removeClass('hidden');
+        $('#userEmail').addClass('hidden');
+        $('#userQQ').addClass('hidden');
+        {#$('.userImgCode').removeClass('hidden');#}
+        {#$('.btn').attr('value', '登录')#}
+    })
+    $('#signup').click(function () {
+        $('.switch span').removeClass('active');
+        $(this).addClass('active');
+        $('#userName').removeClass('hidden');
+        $('#userPassword').removeClass('hidden');
+        $('#userEmail').removeClass('hidden');
+        $('#userQQ').removeClass('hidden');
+        {#$('#userImgCode').removeClass('hidden');#}
+        {#$('#btn').attr('value', '注册')#}
+    })
+    $('#forget').click(function () {
+        $('.switch span').removeClass('active');
+        $(this).addClass('active');
+        $('.userName').addClass('hidden');
+        $('.userPassword').addClass('hidden');
+        $('.userEmail').removeClass('hidden');
+        $('.userQQ').addClass('hidden');
+        $('.userImgCode').removeClass('hidden');
+        $('.btn').attr('value', '忘记密码')
+    })
+</script>
+</body>
+</html>

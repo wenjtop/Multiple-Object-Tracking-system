@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Camera Capture and Compression</title>
+</head>
+<body>
+	<video id="video" width="640" height="480" autoplay></video>
+	<button id="capture">Capture and Compress</button>
+	<button id="upload">Upload</button>
+	<div id="result"></div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg.js/0.8.5/ffmpeg.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			navigator.mediaDevices.getUserMedia({ video: true })
+				.then(function(stream) {
+					var video = document.getElementById('video');
+					video.srcObject = stream;
+					video.play();
+				})
+				.catch(function(error) {
+					console.error('Could not get video stream: ', error);
+				});
+
+			$("#capture").click(function() {
+				var ffmpeg = window.FFmpeg.createFFmpeg({ log: true });
+				var canvas = document.createElement('canvas');
+				var video = document.getElementById('video');
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
+				var ctx = canvas.getContext('2d');
+				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+				var dataURL = canvas.toDataURL('video/webm');
+				var blob = dataURItoBlob(dataURL);
+
+				ffmpeg.load().then(function() {
+					ffmpeg.FS('writeFile', 'input.webm', new Uint8Array(blob));
+					ffmpeg.run('-i', 'input.webm', '-c:v', 'libx264', '-crf', '22', '-c:a', 'aac', '-b:a', '128k', '-y', 'output.mp4').then(function() {
+						var data = ffmpeg.FS('readFile', 'output.mp4');
+						var blob = new Blob([data.buffer], { type: 'video/mp4' });
+						var url = URL.createObjectURL(blob);
+						var video = document.createElement('video');
+						video.src = url;
+						video.controls = true;
+						$('#result').html(video);
+					});
+				});
+			});
+
+			$("#upload").click(function() {
+				var ffmpeg = window.FFmpeg.createFFmpeg({ log: true });
+				var canvas = document.createElement('canvas');
+				var video = document.getElementById('video');
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
+				var ctx = canvas.getContext('2d');
+				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+				var dataURL = canvas.toDataURL('video/webm');
+				var blob = dataURItoBlob(dataURL);
+
+				ffmpeg.load().then(function() {
+					ffmpeg.FS('writeFile', 'input.webm', new Uint8Array(blob));
+					ffmpeg.run('-i', 'input.webm', '-c:v', 'libx264', '-crf', '22', '-c:a', 'aac', '-b:a', '128k', '-
+y', 'output.mp4').then(function() {
+var data = ffmpeg.FS('readFile', 'output.mp4');
+var formData = new FormData();
+formData.append('file', new Blob([data.buffer], { type: 'video/mp4' }));
+$.ajax({
+type: 'POST',
+url: '/upload-video/',
+data: formData,
+processData: false,
+contentType: false,
+success: function(response) {
+alert(response.message);
+},
+error: function(xhr, status, error) {
+console.error('Error:', error);
+}
+});
+});
+});
+});
+					function dataURItoBlob(dataURI) {
+			var byteString = atob(dataURI.split(',')[1]);
+			var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+			var ab = new ArrayBuffer(byteString.length);
+			var ia = new Uint8Array(ab);
+			for (var i = 0; i < byteString.length; i++) {
+				ia[i] = byteString.charCodeAt(i);
+			}
+			return new Blob([ab], { type: mimeString });
+		}
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+.centent {
+    margin-top: 80px;
+}
+{% endblock %}
+
+{% block content %}
+    <div class="container centent">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                个人信息
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>密码</th>
+                    <th>邮箱</th>
+                    <th>QQ</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr>
+                    <td>{{ queryset.username }}</td>
+                    <td>******</td>
+                    <td>{{ queryset.email }}</td>
+                    <td>{{ queryset.qq }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="/user/edit/">编辑</a>
+                        <a class="btn btn-danger btn-xs" href="/user/delete/">注销</a>
+                    </td>
+                </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <ul class="pagination">
+            {{ page_string }}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+.left {
+    float: left;
+    margin:20px;
+    margin-top: 30px;
+}
+
+.right {
+    float: right;
+    margin:20px;
+    margin-top: 30px;
+}
+
+.txtHead {
+    margin-right:150px;
+    margin-left:150px;
+    margin-top: 80px;
+}
+{% endblock %}
+
+{% block content %}
+    <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-6">
+              <div>
+                  <h2 class="text-right txtHead"  >摄像头:</h2>
+              </div>
+<!--              <img  class ="right" src="../static/img/bg.jpg" width="384" height="288" />-->
+<!--              <img src="../static/img/bg.jpg" style="display:none" width="384" height="288" />-->
+              <video class ="right" id="video" width="640" height="480" autoplay></video>
+              <canvas id="canvas" width="640" height="480" style="display:none"></canvas>
+          </div>
+          <div class="col-md-6">
+              <div>
+                  <h2 class="text-left txtHead"  >实时跟踪:</h2>
+              </div>
+
+<!--              <img  class ="left" src="../static/img/bg.jpg" width="384" height="288" />-->
+              <img class ="left" id="processed-image" width="640" height="480" />
+          </div>
+        </div>
+        <h2 id='count' class="text-center"  >计数：0</h2>
+
+<!--        <video id="video" width="384" height="288" autoplay></video>-->
+<!--        <canvas id="canvas" width="384" height="288" style="display:none"></canvas>-->
+<!--        <img id="processed-image" width="384" height="288" />-->
+        <script src="../static/js/timeTracking.js"></script>
+    </div>
+{% endblock %}
+

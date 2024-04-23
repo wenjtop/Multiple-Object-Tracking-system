@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>login</title>
+    <link rel="stylesheet" href="css\loginStyle.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/music.js"></script>
+</head>
+<body>
+
+    <div class = "container">
+        <img src="img/bg2.jpg" alt="" >
+        <div class = "panel" >
+            <div class="content login">
+                <div class="switch">
+                    <span id="login" class="active">登录</span><span>/</span><span id="signup">注册</span><span>/</span><span id=forget>忘记密码?</span>
+                </div>
+                <form id='form' action="/login" method="post" autocomplete="off" target="id_iframe">
+                    <div id="type" class="input">
+                        <button id="button1">登录</button>
+                        <input type="text" name="type" id="typenum" value="1" ><input type="text" name="emailsign" id="emailsign" value="0" >
+                    </div>
+
+                    <div id="email" class="input" placeholder="邮箱">
+                        <input type="email" name="email" id="inputemail" onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/ig,'')">
+                        <button type="submit" id="sendmail">发送验证码</button>
+                    </div>
+
+                    <div id="securitycode" class="input" placeholder="验证码">
+                        <input type="text" name="securitycode" id="inputsecuritycode" onkeyup="this.value=this.value.replace(/[^\w_]/g,'')">
+                    </div>
+
+                    <div class="input" placeholder="用户名/邮箱" id="用户名">
+                        <input type="text" name="username" id="inputusername" onkeyup="this.value=this.value.replace(/[\u4e00-\u9fa5]/ig,'')">
+                    </div>
+
+                    <div class="input" type="password" placeholder="密码" >
+                        <input  type="password" name="password" id="inputpassword" onkeyup="this.value=this.value.replace(/[^\w_]/g,'')">
+                    </div>
+
+                    <div id="qq" class="input" placeholder="QQ">
+                        <input type="text" name="qq" id="inputqq" onkeyup="this.value=this.value.replace(/[^\w_]/g,'')">
+                    </div>
+                    <button id="button">登录</button>
+                </form>
+                <span><a href="http://wpa.qq.com/msgrd?v=3&uin=1007131354&site=qq&menu=yes" id="qq" target="_blank">feedback?</a></span>
+                <iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="w">
+            <div class="mod_copyright">
+                版权所有 © 2020-2021 wenj.top &nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备2021025596号</a><br/>
+                地址: 中国四川省成都市高新区西部园区西南交通大学<br/>
+                邮箱:1007131354@qq.com<br/><br/>
+                <span class="overTime">
+                    o(*￣▽￣*)ブ小破站已经运行了0年0月0天
+                </span>
+            </div>
+        </div>
+    </footer>
+    <script>
+        $('#login').click(function () {
+            $('.switch span').removeClass('active');
+            $(this).addClass('active');
+            $(this).parents('.content').removeClass('signup');
+            $(this).parents('.content').removeClass('forget');
+            $(this).parents('.content').addClass('login');
+            $('div #username').attr('placeholder','UserName/Email');
+            $('#typenum').attr('value','1');
+            $('form #button').text('登录')
+        })
+        $('#signup').click(function () {
+            $('.switch span').removeClass('active');
+            $(this).addClass('active');
+            $(this).parents('.content').removeClass('login');
+            $(this).parents('.content').removeClass('forget');
+            $(this).parents('.content').addClass('signup');
+            $('div #username').attr('placeholder','UserName');
+            $('div #typenum').attr('value','2');
+            $('form #button').text('注册')
+        })
+
+        $('#forget').click(function () {
+            $('.switch span').removeClass('active');
+            $(this).addClass('active');
+            $(this).parents('.content').removeClass('signup');
+            $(this).parents('.content').removeClass('login');
+            $(this).parents('.content').addClass('forget');
+            $('#typenum').attr('value','3');
+            $('form #button').text('忘记密码')
+        })
+
+        $('.input input').on('focus', function (){
+            $(this).parent().addClass('focus');
+        })
+        $('.input input').on('blur', function () {
+            if ($(this).val()==="")
+                $(this).parent().removeClass('focus');
+        })
+        $(function () {
+            $('#sendmail').click(function () {
+                $("#emailsign").attr('value','1');
+                $.ajax({
+                    url: "/loginEmail",
+                    data:{"email":$("#inputemail").val(),"typenum":$("#typenum").val()},
+                    success:function (data, status) {
+                        console.log(data.message);
+                        console.log(status)
+                        if((data.message ==="yes"&& $("#typenum").val() === '3')||(data.message ==="no"&& $("#typenum").val() === '2')){
+                            var count = 60;
+                            var countdown = setInterval(CountDown, 1000);
+                            function CountDown() {
+                                $("#sendmail").attr("disabled", true);
+                                $("#sendmail").text("wait " + count + " s!");
+                                if (count == 0) {
+                                    $("#sendmail").val("Submit").removeAttr("disabled");
+                                    $("#sendmail").text("SendMail");
+                                    clearInterval(countdown);
+                                }
+                                count--;
+                            }
+                        }else if(data.message ==="no"&& $("#typenum").val() === '3'){
+                            alert("Email does not exist!")
+                        }else if(data.message ==="yes"&& $("#typenum").val() === '2'){
+                            alert("Email already!")
+                        }
+                    }
+                });
+            })
+        });
+        $('#button').on('click',function(){
+            $("#emailsign").attr('value','2');
+            if($('#typenum').val() === '1'){
+                console.log($('#typenum').val());
+                if($('#inputusername').val()===''||$('#inputpassword').val()===''){
+                    alert("can not be empty");
+                }
+                else{
+                    $.ajax({
+                        url: "/login1",
+                        data:{"username":$('#inputusername').val(),"password":$('#inputpassword').val()},
+                        success:function (data, status) {
+                            if(data.message === "yes"){
+                                $('#form').attr('target','');
+                                $('#button1').click();
+                            }
+                            if(data.message === "no"){
+                                alert("Incorrect password!!");
+                            }
+                            if(data.message === "exist"){
+                                alert("User name does not exist!!");
+                            }
+                        }
+                    });
+                }
+            }
+            else if($('#typenum').val() === '2'){
+                console.log($('#typenum').val());
+                if($('#inputemail').val()===''||$('#inputsecuritycode').val()===''||$('#inputusername').val()===''||$('#inputpassword').val()===''||$('#inputqq').val()===''){
+                    alert("can not be empty");
+                }
+                else{
+                    console.log(11)
+                    $.ajax({
+                        url: "/login2",
+                        data:{"email":$("#inputemail").val(),
+                            "securitycode":$("#inputsecuritycode").val(),
+                            "username":$("#inputusername").val(),
+                            "password":$("#inputpassword").val(),
+                            "qq":$("#inputqq").val()
+                        },
+                        success:function (data, status) {
+                            if(data.message === "yes"){
+                                alert("Congratulations on becoming the "+ data.id +" member of the small website!!");
+                                $('#login').click();
+                            }
+                            if(data.message === "emailexist"){
+                                alert("Email already!!");
+                            }
+                            if(data.message === "nosecuritycode"){
+                                alert("Incorrect ecuritycode!!");
+                            }
+                            if(data.message === "usernameexist"){
+                                alert("User name exists!!");
+                            }
+                        }
+                    });
+                }
+            }
+            else if($('#typenum').val() === '3'){
+                console.log($('#typenum').val());
+                if($('#inputemail').val()===''||$('#inputsecuritycode').val()===''||$('#inputpassword').val()===''){
+                    alert("can not be empty");
+                }
+                else{
+                    $.ajax({
+                        url: "/login3",
+                        data:{"email":$("#inputemail").val(),
+                            "securitycode":$("#inputsecuritycode").val(),
+                            "password":$("#inputpassword").val()
+                        },
+                        success:function (data, status) {
+                            if(data.message === "yes"){
+                                alert("modify successfully!!");
+                                console.log($('#inputemail').val());
+                                $('#username').addClass('focus');
+                                $("#inputusername").attr('value', $('#inputemail').val());
+                                $('#login').click();
+                            }
+                            if(data.message === "onemail"){
+                                alert("Email does not exist!!");
+                            }
+                            if(data.message === "nosecuritycode"){
+                                alert("Incorrect ecuritycode!!");
+                            }
+                        }
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+</html>

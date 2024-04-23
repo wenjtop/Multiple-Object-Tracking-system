@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video.js HLS Example</title>
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+</head>
+<body>
+    <video id="video-player" class="video-js vjs-default-skin" controls preload="auto" width="640" height="480" data-setup='{"techOrder": ["html5"]}'>
+        <source src="output/playlist.m3u8" type="application/x-mpegURL">
+    </video>
+    <script>
+        var player = videojs('video-player');
+    </script>
+</body>
+</html>

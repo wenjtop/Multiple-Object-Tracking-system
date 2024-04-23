@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+{% block css %}
+.bg{
+     background-image: url("../static/img/home.png");
+     background-size: 100%;
+     background-repeat:no-repeat
+}
+.css1{
+    color:white;
+    font-size:50px;
+}
+.css2{
+    padding-top: 10px;
+    padding-below: 20px;
+    color:white;
+    font-size:20px;
+}
+.css3{
+    color:white;
+    font-size:10px;
+}
+
+{% endblock %}
+
+
+{% block content %}
+<div class="bg" id='myBg'>
+<div id='topLen'>
+        <div id='mot'>
+            <h1  id="css11" class="text-left text-primary">
+                    这是一个 <br><strong class="css1">多目标实时跟踪系统</strong>
+            </h1>
+            <p class="lead text-left text-muted css2">
+                    你可以通过摄像头实时对人和车辆等目标跟踪，或者对上传的视频进行跟踪分析。
+            </p>
+            <a type="button" class="btn btn-primary btn-lg active" href="/timeTracking/">实时跟踪</a>
+            <a type="button" class="btn btn-success btn-lg active" href="/data/">文件管理</a>
+        </div>
+
+        <div id='below' class="css3">
+            <h2 id='fontsize1' class=" mt-4 text-center">你有准备好开始使用本项目了吗？让我们开始吧！</h2>
+            <div id='fontsize2' class="mt-2"><p class="lead lh-180 text-center">使用本项目时，请先检测摄像头是否可用，并允许浏览器访问摄像头，同时保证网络畅通。
+            <br>本项目仅支持MP4格式文件。
+            </p></div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+const imgElement = document.getElementById('myBg');
+imgElement.style.height = `${window.innerHeight}px`;
+
+const motElement = document.getElementById('mot');
+motElement.style.paddingTop = `${window.innerHeight/4}px`;
+motElement.style.paddingLeft = `${window.innerHeight/6}px`;
+
+const belowElement = document.getElementById('below');
+belowElement.style.paddingTop = `${window.innerHeight/3.5}px`;
+
+const topLenElement = document.getElementById('topLen');
+topLenElement.style.marginTop = `${window.innerHeight/20}px`;
+
+const css11Element = document.getElementById('css11');
+css11Element.style.fontSize = `${window.innerHeight/20}px`;
+
+const fontsize1Element = document.getElementById('fontsize1');
+fontsize1Element.style.fontSize = `${window.innerHeight/40}px`;
+
+const fontsize2Element = document.getElementById('fontsize2');
+fontsize2Element.style.fontSize = `${window.innerHeight/60}px`;
+
+{% endblock %}

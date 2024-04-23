@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多目标实时跟踪系统</title>
+
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.min.css' %}">
+
+    <style>
+        {% block css %}{% endblock %}
+        .navbar {
+            border-radius: 0;
+        }
+        .header_container{
+            /*display: block;*/
+            /*!*float: right;*!*/
+            /*margin:0px;*/
+            position:fixed;
+            top: 0;
+            z-index: 100;
+            width:100%;
+        }
+        .marginRight {
+            padding-right: 10%;
+        }
+        .marginLeft {
+            padding-left: 15%;
+        }
+        .fontsize {
+            font-size: 2.5rem;
+        }
+}
+    </style>
+
+</head>
+<body>
+<div>
+    <nav id="head" class="navbar navbar-default block-element header_container">
+        <div class="navbar-header marginLeft">
+                <a class="navbar-brand" href="/home/" id="MOT"> 多目标实时跟踪系统 </a>
+        </div>
+        <div class="collapse navbar-collapse marginRight" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/timeTracking/">实时跟踪</a></li>
+                    <li><a href="/data/">数据管理</a></li>
+                    <li><a href="/user/">个人资料</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false"><span id="myid"></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a id="Person" class="fontsize">行人跟踪</a></li>
+                            <li><a id="Car" class="fontsize">汽车跟踪</a></li>
+                            <li><a id="MultiObj" class="fontsize">多目标跟踪</a></li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">{{ request.session.info.name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/user/" >个人资料</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout/">注销</a></li>
+                        </ul>
+                    </li>
+                </ul>
+        </div>
+    </nav>
+
+
+    {% block content %}{% endblock %}
+
+</div>
+
+
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+<script>
+    const headElement = document.getElementById('head');
+    headElement.style.height = `${window.innerHeight/20}px`;
+    headElement.style.fontSize = `${window.innerHeight/50}px`;
+    headElement.style.paddingTop = `${window.innerHeight/300}px`;
+
+    const MOTElement = document.getElementById('MOT');
+    MOTElement.style.fontSize = `${window.innerHeight/40}px`;
+
+    // const BSElement = document.getElementById('bs-example-navbar-collapse-1');
+    // BSElement.style.paddingRight= `${window.innerHeight/40}px`;
+    function getCookie(name) {
+      const value = "; " + document.cookie;
+      const parts = value.split("; " + name + "=");
+      if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+
+
+    const csrfToken = getCookie("csrftoken");
+
+    window.onload = async function() {
+          const response = await fetch("/changeModel/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken,
+            },
+            body: JSON.stringify({ model: 'getName'}),
+          });
+          console.log('getmodel')
+          const processedFrame = await response.json();
+          console.log(processedFrame.status)
+          if (processedFrame.status == "success"){
+              $('#myid').text(processedFrame.modelName);
+              console.log('success')
+          }
+          else {
+              console.log('fail')
+          }
+    }
+
+    $('#Person').click(async function () {
+          const response = await fetch("/changeModel/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken,
+            },
+            body: JSON.stringify({ model: 'Person'}),
+          });
+          const processedFrame = await response.json();
+          console.log(processedFrame.status)
+          if (processedFrame.status == "success"){
+              $('#myid').text('行人跟踪');
+              console.log('success')
+          }
+          else {
+              console.log('fail')
+          }
+    })
+    $('#MultiObj').click(async function () {
+          const response = await fetch("/changeModel/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken,
+            },
+            body: JSON.stringify({ model: 'MultiObj'}),
+          });
+          const processedFrame = await response.json();
+          if (processedFrame.status == "success"){
+              $('#myid').text('多目标跟踪');
+              console.log('success');
+          }
+          else {
+              console.log('fail');
+          }
+    })
+    $('#Car').click(async function () {
+          const response = await fetch("/changeModel/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken,
+            },
+            body: JSON.stringify({ model: 'Car'}),
+          });
+          const processedFrame = await response.json();
+          if (processedFrame.status == "success"){
+              $('#myid').text('汽车跟踪');
+              console.log('success');
+          }
+          else {
+              console.log('fail');
+          }
+    })
+
+    {% block js %}{% endblock %}
+
+</script>
+
+</body>
+</html>
+
+

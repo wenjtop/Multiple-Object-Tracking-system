@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block css %}
+.left {
+    float: left;
+    margin:20px;
+    margin-top: 30px;
+}
+
+.right {
+    float: right;
+    margin:20px;
+    margin-top: 30px;
+}
+
+.marginTop {
+    margin-top: 80px;
+    text-align: center;
+}
+.center {
+    text-align: center;
+}
+
+{% endblock %}
+
+{% block content %}
+    <div class="panel-heading">
+
+        <div class="marginTop center">
+            <h2>视频名称：{{videoname}}</h2>
+<!--            <video width="960" height="720" controls>-->
+<!--            <source src="/media/{{ obj.video }}" type="video/mp4">-->
+<!--                -->
+<!--            </video>-->
+            <img id="processed-image" />
+<!--            <img id="processed-image" width="960" height="720" />-->
+            <h2 id='count'>计数：0</h2>
+        </div>
+
+        <script src="{% static 'js/videoTracking.js' %}"></script>
+    </div>
+{% endblock %}
+

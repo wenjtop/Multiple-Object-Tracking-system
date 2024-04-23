@@ -1,0 +1,123 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	height: 100vh;
+	display:flex;
+	justify-content:center;
+	background:linear-gradient(45deg, rgb(181, 154, 254), rgb(245, 189, 253)) fixed;
+}
+.container{
+	position: relative;
+	width:70rem;
+}
+.container img{
+	width:70rem;
+	height: 50rem;
+	overflow: hidden;
+}
+
+.switch span{
+	color:#ccc;
+	font-size:1.4rem;
+	cursor: pointer;
+}
+.switch span.active{
+	color:rgb(181, 154, 254);
+}
+
+.panel{
+	width: 30%;
+	margin:10rem 0 0;
+	position: absolute;
+	top: -1rem;
+	left: 7rem;
+	display: flex;
+	justify-content:center;
+}
+
+#form{
+	width: 21rem;
+	margin: 1rem 0 0;
+}
+#form .input {
+	position: relative;
+	width: 100%;
+	margin: 2rem 0;
+	transition: .6s;
+}
+
+.input input{
+	outline: none;
+	border: none;
+	font-size: 1.3rem;
+	border-bottom: .1rem solid rgb(181, 154 , 254);
+}
+
+.input::after{
+	content:attr(placeholder);
+	position: absolute;
+	left: 0;
+	top: -20%;
+	font-size: 1.3rem;
+	color: rgb(129, 101, 207);
+	transition: 0.3s;
+}
+.input.focus::after{
+	top: -80%;
+	font-size: 1rem;
+}
+
+.login .input#email,
+.login .input#securitycode,
+.login .input#qq{
+	margin: 0;
+	height: 0;
+	opacity: 0;
+}
+.input#type{
+	margin: 0;
+	height: 0;
+	opacity: 0;
+}
+.forget .input#username{
+	display:none;
+}
+.forget .input#qq{
+	margin: 0;
+	height: 0;
+	opacity: 0;
+}
+#form span{
+	display:block;
+	color:rgb(110, 89, 167);
+	font-size: .8rem;
+	cursor: pointer;
+}
+#button {
+	border: none;
+	outline: none;
+	font-size: 1.3rem;
+	width: 10rem;
+	height: 3.5rem;
+	border-radius: 3rem;
+	background: linear-gradient(90deg,rgb(181, 154, 254),rgb(254, 189, 253));
+	box-shadow: 0 0 8px rgb(181, 154, 254);
+	cursor: pointer;
+	margin-bottom: 1rem;
+}
+#button1 {
+	display: none;
+}
+form #sendmail{
+	float:right;
+	border: none;
+	outline: none;
+	width:4.5rem;
+	margin: 0.5rem 0 0;
+	border-radius: 3rem;
+	background: linear-gradient(90deg,rgb(181, 154, 254),rgb(254, 189, 253));
+	box-shadow: 0 0 8px rgb(181, 154, 254);
+	cursor: pointer;
+}

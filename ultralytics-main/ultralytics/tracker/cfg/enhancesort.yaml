@@ -1,0 +1,15 @@
+tracker_type: enhancesort  # tracker type, ['botsort', 'bytetrack', 'enhancesort]
+track_middle_high_thresh: 0.1  # threshold for the second association
+tracked_thresh: 0.8  # threshold for init new track if the detection does not match any tracks
+new_thresh: 0.66  # threshold for init new track if the detection does not match any tracks
+lost_thresh: 0.8  # threshold for init new track if the detection does not match any tracks
+new_score_thresh: 0.64  # threshold for matching tracks
+track_buffer: 30  # buffer to calculate the time when to remove tracks
+
+# min_box_area: 10  # threshold for min box areas(for tracker evaluation, not used for now)
+# mot20: False  # for tracker evaluation(not used for now)
+
+
+proximity_thresh: 0.5
+appearance_thresh: 0.25
+with_reid: False

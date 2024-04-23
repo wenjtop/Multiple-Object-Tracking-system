@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Camera Capture</title>
+</head>
+<body>
+	<video id="video" width="640" height="480" autoplay></video>
+	<canvas id="canvas" style="display: none;"></canvas>
+	<button id="capture">Capture</button>
+	<div id="result"></div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			navigator.mediaDevices.getUserMedia({ video: true })
+				.then(function(stream) {
+					var video = document.getElementById('video');
+					video.srcObject = stream;
+					video.play();
+				})
+				.catch(function(error) {
+					console.error('Could not get video stream: ', error);
+				});
+
+            setInterval(function() {
+				var canvas = document.getElementById('canvas');
+				var video = document.getElementById('video');
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
+
+				var ctx = canvas.getContext('2d');
+				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+				var dataURL = canvas.toDataURL('image/png');
+				$.ajax({
+					type: 'POST',
+					url: '/save_image',
+					data: { image: dataURL },
+					success: function(response) {
+						$("#result").html('<img src="' + response.image + '">');
+					},
+					error: function(xhr, status, error) {
+						console.error('Error:', error);
+					}
+				});
+            }, 100);
+
+			$("#capture").click(function() {
+				var canvas = document.getElementById('canvas');
+				var video = document.getElementById('video');
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
+				var ctx = canvas.getContext('2d');
+				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+				var dataURL = canvas.toDataURL('image/png');
+				$.ajax({
+					type: 'POST',
+					url: '/save_image',
+					data: { image: dataURL },
+					success: function(response) {
+						$("#result").html('<img src="' + response.image + '">');
+					},
+					error: function(xhr, status, error) {
+						console.error('Error:', error);
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

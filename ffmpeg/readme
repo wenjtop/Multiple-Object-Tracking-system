@@ -1,0 +1,30 @@
+要使用 Django 和 RTMP 进行视频推流并实现直播效果，您需要遵循以下步骤：
+
+安装并配置 Nginx 和 RTMP 模块：
+为了进行视频推流，您需要配置一个支持 RTMP 的流媒体服务器。Nginx 是一个流行的 Web 服务器，通过其 RTMP 模块可以实现这一功能。
+首先安装 Nginx 和 RTMP 模块。在 Ubuntu 系统中，您可以使用以下命令：
+
+sudo apt-get install nginx
+sudo apt-get install libnginx-mod-rtmp
+配置 Nginx 和 RTMP：
+编辑 Nginx 配置文件，通常位于 /etc/nginx/nginx.conf。在文件末尾添加以下内容，以配置 RTMP：
+
+rtmp {
+    server {
+        listen 1935;
+        chunk_size 4096;
+
+        application live {
+            live on;
+            record off;
+        }
+    }
+}
+上述配置将创建一个名为 "live" 的 RTMP 应用，监听 1935 端口。
+
+保存并关闭文件。重启 Nginx 以应用更改：
+
+sudo systemctl restart nginx
+
+
+192.168.31.176

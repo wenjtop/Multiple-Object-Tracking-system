@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Camera Capture</title>
+</head>
+<body>
+	<video id="video" width="640" height="480" autoplay></video>
+	<button id="capture">Capture</button>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			navigator.mediaDevices.getUserMedia({ video: true })
+				.then(function(stream) {
+					var video = document.getElementById('video');
+					video.srcObject = stream;
+					video.play();
+				})
+				.catch(function(error) {
+					console.error('Could not get video stream: ', error);
+				});
+
+			$("#capture").click(function() {
+				var canvas = document.createElement('canvas');
+				canvas.width = 640;
+				canvas.height = 480;
+				var ctx = canvas.getContext('2d');
+				var video = document.getElementById('video');
+				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+				var dataURL = canvas.toDataURL('image/png');
+				$.ajax({
+					type: 'POST',
+					url: '/save_image',
+					data: { image: dataURL },
+					success: function(response) {
+						alert(response.message);
+					},
+					error: function(xhr, status, error) {
+						console.error('Error:', error);
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

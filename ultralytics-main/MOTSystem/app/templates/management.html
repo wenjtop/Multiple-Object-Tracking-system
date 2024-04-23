@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+
+{% block css %}
+.centent {
+    margin-top: 80px;
+}
+{% endblock %}
+
+{% block content %}
+    <div class="container centent">
+        <div style="margin-bottom: 10px">
+            <a class="btn btn-success" href="/data/addVideo/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                上传视频
+            </a>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                视频列表
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>视频名</th>
+                    <th>原视频</th>
+<!--                    <th>多目标跟踪视频</th>-->
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr>
+                        <th>{{ forloop.counter }}</th>
+                        <td>{{ obj.videoname }}</td>
+                        <td>
+<!--                            <img src="/media/{{ obj.video }}" style="height: 80px;">-->
+                        <video width="160" height="120" controls>
+                          <source src="/media/{{ obj.video }}" type="video/mp4">
+                        </video>
+
+<!--                            <video src="/media/{{ obj.video }}" controls style="width:100px;height:100px;"></video>-->
+                        </td>
+<!--                        <td>-->
+<!--                            {% if obj.videoMOT == "未处理" %}-->
+<!--                                {{ obj.videoMOT }}-->
+<!--                                <a class="btn btn-primary btn-xs" href="/data/{{ obj.id }}/videoTracking/">跟踪</a>-->
+<!--                            {% else %}-->
+<!--                            <a class="btn btn-primary btn-xs" href="/data/{{ obj.id }}/videoTracking/">跟踪</a>-->
+<!--                                <video width="160" height="120" controls>-->
+<!--                                    <source src="/media/{{ obj.videoMOT }}" type="video/mp4">-->
+<!--                                </video>-->
+<!--                            {% endif %}-->
+<!--                        </td>-->
+                        <td>
+                            <a class="btn btn-primary btn-xs" href="/data/{{ obj.id }}/videoTracking/">跟踪</a>
+                            {% if obj.videoMOT == "" %}
+                                <a class="btn btn-default btn-xs" >报告</a>
+                                <a class="btn btn-default btn-xs" >下载</a>
+                            {% else %}
+                                <a class="btn btn-primary btn-xs" href="/data/{{ obj.id }}/report/">报告</a>
+                                <a class="btn btn-primary btn-xs" href="/data/{{ obj.id }}/download_video/">下载</a>
+                            {% endif %}
+                            <a class="btn btn-danger btn-xs" href="/data/{{ obj.id }}/delete/">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <ul class="pagination">
+            {{ page_string }}
+        </ul>
+    </div>
+{% endblock %}

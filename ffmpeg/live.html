@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RTMP Streaming</title>
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-flash/2.2.0/videojs-flash.min.js"></script>
+</head>
+<body>
+    <video id="player" class="video-js vjs-default-skin" controls width="640" height="360">
+        <source src="rtmp://localhost:1935/live/stream_name" type="rtmp/mp4">
+    </video>
+    <script>
+        var player = videojs('player', {
+            techOrder: ['flash', 'html5']
+        });
+    </script>
+</body>
+</html>
